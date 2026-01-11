@@ -1,0 +1,43 @@
+{
+  "name": "scan-inventory",
+  "version": "1.0.0",
+  "description": "NativeScript Angular Scan Inventory Application",
+  "main": "src/main.ts",
+  "author": "Developer",
+  "license": "MIT",
+  "scripts": {
+    "android": "ns run android",
+    "ios": "ns run ios",
+    "build.android": "ns build android",
+    "build.ios": "ns build ios",
+    "clean": "ns clean",
+    "preview": "ns preview"
+  },
+  "dependencies": {
+    "@angular/animations": "17.3.12",
+    "@angular/common": "17.3.12",
+    "@angular/compiler": "17.3.12",
+    "@angular/core": "17.3.12",
+    "@angular/forms": "17.3.12",
+    "@angular/platform-browser": "17.3.12",
+    "@angular/platform-browser-dynamic": "17.3.12",
+    "@angular/router": "17.3.12",
+    "@nativescript/angular": "~17.0.0",
+    "@nativescript/camera": "~5.1.0",
+    "@nativescript/core": "~8.6.0",
+    "@nativescript/imagepicker": "~3.0.0",
+    "@nativescript/theme": "^3.1.0",
+    "rxjs": "~7.8.0",
+    "zone.js": "~0.14.0"
+  },
+  "devDependencies": {
+    "@angular/compiler-cli": "17.3.12",
+    "@nativescript/android": "~8.6.0",
+    "@nativescript/ios": "~8.6.0",
+    "@nativescript/preview-cli": "1.0.14",
+    "@nativescript/types": "~8.6.0",
+    "@nativescript/webpack": "~5.0.0",
+    "@ngtools/webpack": "17.3.12",
+    "typescript": "~5.3.0"
+  }
+}
