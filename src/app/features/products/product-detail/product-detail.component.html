@@ -1,0 +1,125 @@
+<ActionBar title="Szczegóły produktu" class="action-bar">
+  <NavigationButton
+    text="Wstecz"
+    android.systemIcon="ic_menu_back"
+    (tap)="onBack()"
+  ></NavigationButton>
+  <ActionItem
+    ios.position="right"
+    android.position="actionBar"
+    text="✏️"
+    (tap)="onEdit()"
+  ></ActionItem>
+</ActionBar>
+
+<GridLayout rows="*, auto" class="page">
+  <!-- Loading -->
+  <ActivityIndicator
+    row="0"
+    *ngIf="isLoading"
+    busy="true"
+    class="activity-indicator"
+  ></ActivityIndicator>
+
+  <!-- Error -->
+  <StackLayout row="0" *ngIf="errorMessage && !isLoading" class="error-container">
+    <Label text="⚠️" class="error-icon"></Label>
+    <Label [text]="errorMessage" class="error-text" textWrap="true"></Label>
+    <Button text="Wróć" class="back-button" (tap)="onBack()"></Button>
+  </StackLayout>
+
+  <!-- Product Details -->
+  <ScrollView row="0" *ngIf="product && !isLoading && !errorMessage">
+    <StackLayout class="content">
+      <!-- Product Header -->
+      <GridLayout columns="auto, *" class="product-header">
+        <StackLayout col="0" class="product-image-container">
+          <Image
+            *ngIf="product.imageUrl"
+            [src]="product.imageUrl"
+            class="product-image"
+            stretch="aspectFill"
+          ></Image>
+          <Label *ngIf="!product.imageUrl" text="📦" class="product-icon"></Label>
+          <Button text="📷" class="photo-button" (tap)="onTakePhoto()"></Button>
+        </StackLayout>
+        <StackLayout col="1" class="product-header-info">
+          <Label [text]="product.name" class="product-name" textWrap="true"></Label>
+          <Label [text]="product.code" class="product-code"></Label>
+          <StackLayout orientation="horizontal" class="status-row">
+            <Label
+              [text]="getStatusText(product.status)"
+              [style.backgroundColor]="getStatusColor(product.status)"
+              class="status-badge"
+            ></Label>
+          </StackLayout>
+        </StackLayout>
+      </GridLayout>
+
+      <!-- Quick Actions -->
+      <GridLayout columns="*, *, *" class="quick-actions">
+        <Button col="0" text="📷 Zdjęcie" class="action-btn" (tap)="onTakePhoto()"></Button>
+        <Button col="1" text="📝 Edytuj" class="action-btn" (tap)="onEdit()"></Button>
+        <Button col="2" text="🗑️ Usuń" class="action-btn action-btn-danger" (tap)="onDelete()"></Button>
+      </GridLayout>
+
+      <!-- Description Section -->
+      <StackLayout class="section">
+        <Label text="Opis" class="section-title"></Label>
+        <Label [text]="product.description || 'Brak opisu'" class="section-content" textWrap="true"></Label>
+      </StackLayout>
+
+      <!-- Details Section -->
+      <StackLayout class="section">
+        <Label text="Informacje" class="section-title"></Label>
+        
+        <GridLayout columns="auto, *" rows="auto, auto, auto, auto, auto" class="details-grid">
+          <!-- Category -->
+          <Label col="0" row="0" text="Kategoria:" class="detail-label"></Label>
+          <Label col="1" row="0" [text]="product.category" class="detail-value"></Label>
+          
+          <!-- Quantity -->
+          <Label col="0" row="1" text="Ilość:" class="detail-label"></Label>
+          <StackLayout col="1" row="1" orientation="horizontal" class="quantity-row">
+            <Label [text]="product.quantity" class="detail-value quantity-value"></Label>
+            <Button text="Zmień" class="quantity-btn" (tap)="onUpdateQuantity()"></Button>
+          </StackLayout>
+          
+          <!-- Status -->
+          <Label col="0" row="2" text="Status:" class="detail-label"></Label>
+          <Label 
+            col="1" 
+            row="2" 
+            [text]="getStatusText(product.status)" 
+            [style.color]="getStatusColor(product.status)"
+            class="detail-value"
+          ></Label>
+          
+          <!-- Created -->
+          <Label col="0" row="3" text="Utworzono:" class="detail-label"></Label>
+          <Label col="1" row="3" [text]="formatDate(product.createdAt)" class="detail-value"></Label>
+          
+          <!-- Updated -->
+          <Label col="0" row="4" text="Zaktualizowano:" class="detail-label"></Label>
+          <Label col="1" row="4" [text]="formatDate(product.updatedAt)" class="detail-value"></Label>
+        </GridLayout>
+      </StackLayout>
+
+      <!-- Product Code Section -->
+      <StackLayout class="section code-section">
+        <Label text="Kod produktu" class="section-title"></Label>
+        <StackLayout class="code-container">
+          <Label [text]="product.code" class="code-text"></Label>
+          <Label text="Zeskanuj ten kod, aby szybko znaleźć produkt" class="code-hint"></Label>
+        </StackLayout>
+      </StackLayout>
+    </StackLayout>
+  </ScrollView>
+
+  <!-- Bottom Actions -->
+  <GridLayout row="1" columns="*, *" class="bottom-actions" *ngIf="product && !isLoading">
+    <Button col="0" text="✏️ Edytuj" class="bottom-btn edit-btn" (tap)="onEdit()"></Button>
+    <Button col="1" text="🗑️ Usuń" class="bottom-btn delete-btn" (tap)="onDelete()"></Button>
+  </GridLayout>
+</GridLayout>
+

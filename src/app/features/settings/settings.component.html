@@ -1,0 +1,153 @@
+<ActionBar title="Ustawienia" class="action-bar">
+  <NavigationButton
+    text="Wstecz"
+    android.systemIcon="ic_menu_back"
+    (tap)="onBack()"
+  ></NavigationButton>
+</ActionBar>
+
+<ScrollView class="page">
+  <StackLayout class="content">
+    <!-- Status Section -->
+    <StackLayout class="section">
+      <Label text="Status" class="section-title"></Label>
+      
+      <GridLayout columns="*, auto" class="setting-item">
+        <StackLayout col="0">
+          <Label text="Status API" class="setting-label"></Label>
+          <Label text="Połączenie z serwerem" class="setting-hint"></Label>
+        </StackLayout>
+        <Label
+          col="1"
+          [text]="getApiStatusText()"
+          [style.color]="getApiStatusColor()"
+          class="status-value"
+        ></Label>
+      </GridLayout>
+
+      <GridLayout columns="*, auto" class="setting-item">
+        <StackLayout col="0">
+          <Label text="Kamera" class="setting-label"></Label>
+          <Label text="Dostępność kamery na urządzeniu" class="setting-hint"></Label>
+        </StackLayout>
+        <Label
+          col="1"
+          [text]="cameraAvailable ? 'Dostępna' : 'Niedostępna'"
+          [style.color]="cameraAvailable ? '#4CAF50' : '#F44336'"
+          class="status-value"
+        ></Label>
+      </GridLayout>
+
+      <GridLayout columns="*, auto" class="setting-item">
+        <StackLayout col="0">
+          <Label text="Ostatnia synchronizacja" class="setting-label"></Label>
+        </StackLayout>
+        <Label col="1" [text]="lastSyncTime" class="setting-value"></Label>
+      </GridLayout>
+    </StackLayout>
+
+    <!-- General Settings -->
+    <StackLayout class="section">
+      <Label text="Ogólne" class="section-title"></Label>
+      
+      <GridLayout columns="*, auto" class="setting-item">
+        <StackLayout col="0">
+          <Label text="Tryb offline" class="setting-label"></Label>
+          <Label text="Pracuj bez połączenia z internetem" class="setting-hint"></Label>
+        </StackLayout>
+        <Switch
+          col="1"
+          [checked]="settings.offlineMode"
+          (checkedChange)="onOfflineModeChange($event.value)"
+          class="setting-switch"
+        ></Switch>
+      </GridLayout>
+
+      <GridLayout columns="*, auto" class="setting-item">
+        <StackLayout col="0">
+          <Label text="Automatyczna synchronizacja" class="setting-label"></Label>
+          <Label text="Synchronizuj dane przy połączeniu" class="setting-hint"></Label>
+        </StackLayout>
+        <Switch
+          col="1"
+          [checked]="settings.autoSync"
+          (checkedChange)="onAutoSyncChange($event.value)"
+          class="setting-switch"
+        ></Switch>
+      </GridLayout>
+
+      <GridLayout columns="*, auto" class="setting-item">
+        <StackLayout col="0">
+          <Label text="Ciemny motyw" class="setting-label"></Label>
+          <Label text="Włącz tryb ciemny" class="setting-hint"></Label>
+        </StackLayout>
+        <Switch
+          col="1"
+          [checked]="settings.darkMode"
+          (checkedChange)="onDarkModeChange($event.value)"
+          class="setting-switch"
+        ></Switch>
+      </GridLayout>
+    </StackLayout>
+
+    <!-- Scanner Settings -->
+    <StackLayout class="section">
+      <Label text="Skaner" class="section-title"></Label>
+      
+      <GridLayout columns="*, auto" class="setting-item">
+        <StackLayout col="0">
+          <Label text="Dźwięk skanowania" class="setting-label"></Label>
+          <Label text="Odtwórz dźwięk po zeskanowaniu" class="setting-hint"></Label>
+        </StackLayout>
+        <Switch
+          col="1"
+          [checked]="settings.scanSoundEnabled"
+          (checkedChange)="onScanSoundChange($event.value)"
+          class="setting-switch"
+        ></Switch>
+      </GridLayout>
+
+      <GridLayout columns="*, auto" class="setting-item">
+        <StackLayout col="0">
+          <Label text="Wibracje" class="setting-label"></Label>
+          <Label text="Wibruj przy skanowaniu" class="setting-hint"></Label>
+        </StackLayout>
+        <Switch
+          col="1"
+          [checked]="settings.vibrationEnabled"
+          (checkedChange)="onVibrationChange($event.value)"
+          class="setting-switch"
+        ></Switch>
+      </GridLayout>
+
+      <Button text="📷 Test kamery" class="action-button" (tap)="onTestCamera()"></Button>
+    </StackLayout>
+
+    <!-- Data Management -->
+    <StackLayout class="section">
+      <Label text="Zarządzanie danymi" class="section-title"></Label>
+      
+      <Button text="🔄 Synchronizuj teraz" class="action-button" (tap)="onSyncNow()"></Button>
+      <Button text="📤 Eksportuj dane" class="action-button" (tap)="onExportData()"></Button>
+      <Button text="🗑️ Wyczyść cache" class="action-button action-button-warning" (tap)="onClearCache()"></Button>
+      <Button text="⚙️ Resetuj ustawienia" class="action-button action-button-danger" (tap)="onResetSettings()"></Button>
+    </StackLayout>
+
+    <!-- About Section -->
+    <StackLayout class="section">
+      <Label text="Informacje" class="section-title"></Label>
+      
+      <GridLayout columns="*, auto" class="setting-item" (tap)="onAbout()">
+        <Label col="0" text="O aplikacji" class="setting-label"></Label>
+        <Label col="1" [text]="'v' + appVersion" class="setting-value"></Label>
+      </GridLayout>
+
+      <StackLayout class="about-info">
+        <Label text="Scan Inventory" class="app-name"></Label>
+        <Label text="Aplikacja NativeScript Angular" class="app-desc"></Label>
+        <Label text="Funkcje natywne: Kamera, Storage" class="app-desc"></Label>
+      </StackLayout>
+    </StackLayout>
+  </StackLayout>
+</ScrollView>
+
