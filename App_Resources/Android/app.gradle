@@ -1,0 +1,17 @@
+// Android build configuration
+android {
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 34
+        
+        // Enable multidex
+        multiDexEnabled true
+    }
+    
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
+

@@ -1,0 +1,4 @@
+// Build settings for iOS
+IPHONEOS_DEPLOYMENT_TARGET = 13.0
+CODE_SIGN_IDENTITY = 
+
